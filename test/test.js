@@ -1,5 +1,5 @@
-const assert = require('chai').assert;
-const sum = require('../index.js');
+import { assert } from 'chai';
+import sum from '../index.js';
 
 describe('App', () => {
   it('it works', () => {

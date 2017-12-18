@@ -6,7 +6,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register"
   },
   "devDependencies": {
     "babel": "6.3.13",

@@ -1,5 +1,5 @@
-module.exports = {
-  sum: (x, y) => {
-    return x + y;
-  }
+const sum = (x,y) => {
+  return x + y;
 };
+
+export default sum;
