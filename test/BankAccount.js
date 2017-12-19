@@ -37,7 +37,7 @@ describe('BANK ACCOUNT --', () => {
   });
 
   it ('Should substract correctly the amount of money from the account', () => {
-    const account = new BankAccount({ balance: 100 });
+    const account = new BankAccount({name: 'victor', lastname: 'ribero'}, 100);
 
     account.substractBalance(90);
 
@@ -45,7 +45,7 @@ describe('BANK ACCOUNT --', () => {
   });
 
   it ('Should throw an error if we try to substract more money than the existing', () => {
-    const account = new BankAccount({ balance: 100 });
+    const account = new BankAccount({name: 'victor', lastname: 'ribero'}, 100);
 
     expect(() => {
       account.substractBalance(999);
@@ -53,22 +53,18 @@ describe('BANK ACCOUNT --', () => {
   });
 
   it ('Should not be able to add money if the account is frozen', () => {
-    const account = new BankAccount({ balance: 100, frozen: true });
+    const account = new BankAccount({name: 'victor', lastname: 'ribero'}, 100, true);
 
     expect(() => {
-      account.substractBalance(1);
+      account.addBalance(1);
     }).to.throw('Can not add money to a frozen account');
   });
 
   it ('Should not be able to substract money if the account is frozen', () => {
-    const account = new BankAccount({ balance: 100, frozen: true });
+    const account = new BankAccount({name: 'victor', lastname: 'ribero'}, 100, true);
 
     expect(() => {
       account.substractBalance(10);
     }).to.throw('Can not substract money to a frozen account');
-  });
-
-  it ('Should have ONLY 1 owner', () => {
-    const account = newBankAccount()
   });
 });

@@ -1,8 +1,8 @@
 export default class BankAccount {
-  constructor(params) {
+  constructor(owner, balance, isFrozen) {
     this.id = this.generateRandomId();
-    this.balance = params.balance || 0;
-    this.isFrozen = params.isFrozen || false;
+    this.balance = balance || 0;
+    this.isFrozen = isFrozen || false;
   }
 
   generateRandomId() {
