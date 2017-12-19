@@ -1,7 +1,8 @@
 export default class BankAccount {
-  constructor(balance) {
+  constructor(params) {
     this.id = this.generateRandomId();
-    this.balance = balance;
+    this.balance = params.balance;
+    this.isFrozen = params.isFrozen;
   }
 
   generateRandomId() {
@@ -12,10 +13,17 @@ export default class BankAccount {
   }
 
   addBalance(balanceToAdd) {
+    if (this.isFrozen) {
+      throw new Error('Can not add money to a frozen account');
+    }
     this.balance += balanceToAdd;
   }
 
   substractBalance(balanceToSubstract) {
+    if (this.isFrozen) {
+      throw new Error('Can not substract money to a frozen account');
+    }
+
     if (this.balance - balanceToSubstract < 0) {
       throw new Error('Balance cant be negative');
     }

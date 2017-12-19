@@ -17,30 +17,54 @@ describe('BankAccount --', () => {
   });
 
   it ('Should have an ID with more than 20 characters', () => {
-    const bankAccountId = new BankAccount(0).id;
+    const bankAccountId = new BankAccount({ balance: 0 }).id;
     bankAccountId.should.have.lengthOf(20);
   });
 
   it ('Should have a balance defined', () => {
-    const balance = new BankAccount(0).balance;
+    const balance = new BankAccount({ balance: 0 }).balance;
     should.exist(balance);
   });
 
-  it ('Shouldn have an balance type::int', () => {
-    const balance = new BankAccount(0).balance;
+  it ('Should have an balance type::int', () => {
+    const balance = new BankAccount({ balance: 0 }).balance;
     balance.should.be.a('number');
   });
 
-  it ('Shouldn\'t have a negative balance', () => {
-    const balance = new BankAccount(0).balance;
+  it ('Should not have a negative balance', () => {
+    const balance = new BankAccount({ balance:0 }).balance;
     balance.should.be.gte(0);
   });
 
-  it ('Shouln\'t be possible to substr more balance than the one is in the account', () => {
-    const bankAccount = new BankAccount(100);
+  it ('Should substract correctly the amount of money from the account', () => {
+    const bankAccount = new BankAccount({ balance: 100 });
 
     bankAccount.substractBalance(90);
 
     (bankAccount.balance).should.be.equal(10);
+  });
+
+  it ('Should throw an error if we try to substract more money than the existing', () => {
+    const bankAccount = new BankAccount({ balance: 100 });
+
+    expect(() => {
+      bankAccount.substractBalance(999);
+    }).to.throw('Balance cant be negative');
+  });
+
+  it ('Should not be able to add money if the account is frozen', () => {
+    const bankAccount = new BankAccount({ balance: 100, frozen: true });
+
+    expect(() => {
+      bankAccount.substractBalance(1);
+    }).to.throw('Can not add money to a frozen account');
+  });
+
+  it ('Should not be able to substract money if the account is frozen', () => {
+    const bankAccount = new BankAccount({ balance: 100, frozen: true });
+
+    expect(() => {
+      bankAccount.substractBalance(10);
+    }).to.throw('Can not substract money to a frozen account');
   });
 });
