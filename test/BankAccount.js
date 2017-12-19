@@ -5,66 +5,70 @@ import {expect} from 'chai';
 import {assert} from 'chai';
 const should = chai.should();
 
-describe('BankAccount --', () => {
+describe('BANK ACCOUNT --', () => {
   it ('Should have an ID defined', () => {
-    const bankAccountId = new BankAccount(0).id;
+    const bankAccountId = new BankAccount().id;
     bankAccountId.should.exist;
   });
 
   it ('Should have an ID auto generated type::string', () => {
-    const bankAccountId = new BankAccount(0).id;
+    const bankAccountId = new BankAccount().id;
     bankAccountId.should.be.a('string');
   });
 
   it ('Should have an ID with more than 20 characters', () => {
-    const bankAccountId = new BankAccount({ balance: 0 }).id;
+    const bankAccountId = new BankAccount().id;
     bankAccountId.should.have.lengthOf(20);
   });
 
   it ('Should have a balance defined', () => {
-    const balance = new BankAccount({ balance: 0 }).balance;
+    const balance = new BankAccount().balance;
     should.exist(balance);
   });
 
   it ('Should have an balance type::int', () => {
-    const balance = new BankAccount({ balance: 0 }).balance;
+    const balance = new BankAccount().balance;
     balance.should.be.a('number');
   });
 
   it ('Should not have a negative balance', () => {
-    const balance = new BankAccount({ balance:0 }).balance;
+    const balance = new BankAccount().balance;
     balance.should.be.gte(0);
   });
 
   it ('Should substract correctly the amount of money from the account', () => {
-    const bankAccount = new BankAccount({ balance: 100 });
+    const account = new BankAccount({ balance: 100 });
 
-    bankAccount.substractBalance(90);
+    account.substractBalance(90);
 
-    (bankAccount.balance).should.be.equal(10);
+    (account.balance).should.be.equal(10);
   });
 
   it ('Should throw an error if we try to substract more money than the existing', () => {
-    const bankAccount = new BankAccount({ balance: 100 });
+    const account = new BankAccount({ balance: 100 });
 
     expect(() => {
-      bankAccount.substractBalance(999);
+      account.substractBalance(999);
     }).to.throw('Balance cant be negative');
   });
 
   it ('Should not be able to add money if the account is frozen', () => {
-    const bankAccount = new BankAccount({ balance: 100, frozen: true });
+    const account = new BankAccount({ balance: 100, frozen: true });
 
     expect(() => {
-      bankAccount.substractBalance(1);
+      account.substractBalance(1);
     }).to.throw('Can not add money to a frozen account');
   });
 
   it ('Should not be able to substract money if the account is frozen', () => {
-    const bankAccount = new BankAccount({ balance: 100, frozen: true });
+    const account = new BankAccount({ balance: 100, frozen: true });
 
     expect(() => {
-      bankAccount.substractBalance(10);
+      account.substractBalance(10);
     }).to.throw('Can not substract money to a frozen account');
+  });
+
+  it ('Should have ONLY 1 owner', () => {
+    const account = newBankAccount()
   });
 });
