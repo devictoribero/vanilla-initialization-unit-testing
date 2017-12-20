@@ -35,7 +35,7 @@ describe('A BANK ACCOUNT', () => {
     balance.should.be.a('number');
   });
 
-  it ('Should not have a negative balance', () => {
+  it ('Should NOT have a negative balance', () => {
     const balance = new BankAccount().balance;
 
     balance.should.be.gte(0);
@@ -57,7 +57,7 @@ describe('A BANK ACCOUNT', () => {
     }).to.throw('Balance cant be negative');
   });
 
-  it ('Should not be able to add money if the account is frozen', () => {
+  it ('Should NOT be able to add money if the account is frozen', () => {
     const account = new BankAccount(100, true);
 
     expect(() => {
@@ -65,7 +65,7 @@ describe('A BANK ACCOUNT', () => {
     }).to.throw('Can not add money to a frozen account');
   });
 
-  it ('Should not be able to substract money if the account is frozen', () => {
+  it ('Should NOT be able to substract money if the account is frozen', () => {
     const account = new BankAccount(100, true);
 
     expect(() => {

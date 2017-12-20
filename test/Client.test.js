@@ -6,7 +6,7 @@ import Client from '../modules/Client';
 const should = chai.should();
 
 describe('A CLIENT', () => {
-  it ('Should not be able to have 0 bank accounts', () => {
+  it ('Should NOT be able to have 0 bank accounts', () => {
     expect(() => {
       const numOfAccounts = new Client('Victor', 'Ribero');
     }).to.throw('Client should have an account');
@@ -27,5 +27,21 @@ describe('A CLIENT', () => {
     ).currentAccounts();
 
     accounts.should.have.lengthOf(2);
+  });
+
+  it ('Should know which frozen he has frozen', () => {
+    const client = new Client(
+      'Victor',
+      'Ribero',
+      [
+        new BankAccount(100, true),
+        new BankAccount(100, false),
+        new BankAccount(100, true),
+      ],
+    );
+
+    const frozenAccounts = client.frozenAccounts();
+
+    frozenAccounts.should.have.lengthOf(2);
   });
 });

@@ -11,4 +11,8 @@ export default class Client {
   currentAccounts() {
     return this.accounts;
   }
+
+  frozenAccounts() {
+    return this.accounts.filter(account => (account.isFrozen));
+  }
 }
