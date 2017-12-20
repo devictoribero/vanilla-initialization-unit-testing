@@ -9,6 +9,7 @@ describe('A CLIENT', () => {
   it ('Should NOT be able to have 0 bank accounts', () => {
     expect(() => {
       const numOfAccounts = new Client('Victor', 'Ribero');
+
     }).to.throw('Client should have an account');
   });
 
@@ -43,5 +44,31 @@ describe('A CLIENT', () => {
     const frozenAccounts = client.frozenAccounts();
 
     frozenAccounts.should.have.lengthOf(2);
+  });
+
+  describe('when wants to transfer money from one of his accounts', () => {
+    it ('Should be the owner of emissor account', () => {
+      const accountNotOwned = new BankAccount(10000);
+      const client = new Client('Victor', 'Ribero', [new BankAccount(100)]);
+
+      expect(() => {
+        client.transferMoney(accountNotOwned, client.accounts[0], 100);
+
+      }).to.throw('This client is not the owner of the account');
+    });
+
+    it ('Should have enough money in his account', () => {
+      const client = new Client('Victor', 'Ribero', [new BankAccount()]);
+      const NOT_ENOUGH_MONEY = 100;
+
+      expect(() => {
+        client.transferMoney(
+          client.accounts[0],
+          client.accounts[0],
+          NOT_ENOUGH_MONEY
+        );
+
+      }).to.throw('The emissor account has not enough money');
+    });
   });
 });

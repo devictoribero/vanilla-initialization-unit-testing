@@ -54,7 +54,7 @@ describe('A BANK ACCOUNT', () => {
 
     expect(() => {
       account.substractBalance(999);
-    }).to.throw('Balance cant be negative');
+    }).to.throw('Balance can not be negative');
   });
 
   it ('Should NOT be able to add money if the account is frozen', () => {

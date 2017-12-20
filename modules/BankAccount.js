@@ -24,9 +24,13 @@ export default class BankAccount {
       throw new Error('Can not substract money to a frozen account');
     }
 
-    if (this.balance - balanceToSubstract < 0) {
-      throw new Error('Balance cant be negative');
+    if (!this.hasSameOrHigherMoney(balanceToSubstract)) {
+      throw new Error('Balance can not be negative');
     }
     this.balance -= balanceToSubstract;
+  }
+
+  hasSameOrHigherMoney(moneyToCheck) {
+    return this.balance >= moneyToCheck;
   }
 }
