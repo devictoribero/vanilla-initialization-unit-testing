@@ -25,10 +25,6 @@ export default class Client {
       throw new Error('The emissor account is frozen');
     }
 
-    if (receptorAccount.isFrozen) {
-      throw new Error('The receptor account is frozen');
-    }
-
     if (!emissorAccount.hasSameOrHigherMoney(money)) {
       throw new Error('The emissor account has not enough money');
     }
