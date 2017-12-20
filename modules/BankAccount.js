@@ -1,5 +1,5 @@
 export default class BankAccount {
-  constructor(owner, balance, isFrozen) {
+  constructor(balance, isFrozen) {
     this.id = this.generateRandomId();
     this.balance = balance || 0;
     this.isFrozen = isFrozen || false;

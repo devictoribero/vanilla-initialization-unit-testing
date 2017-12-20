@@ -1,15 +1,18 @@
 import * as chai from 'chai';
 
-describe('A BANK --', () => {
+describe('A BANK', () => {
   it('Should be able to create new offices', () => {
 
   });
+
   it('Should be able to move current offices', () => {
 
   });
+
   it('Should be able to create accounts', () => {
 
   });
+
   it('Should be able to freeze accounts', () => {
 
   });

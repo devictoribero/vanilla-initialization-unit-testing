@@ -1,14 +1,31 @@
 import * as chai from 'chai';
-import BankAccount from '../modules/BankAccount'
+import {expect} from 'chai';
+import BankAccount from '../modules/BankAccount';
+import Client from '../modules/Client';
 
 const should = chai.should();
 
-describe('CLIENT --', () => {
-  if('Should have a minimum of 1 account in the bank', () => {
-    numOfAccounts.should.have.lengthOf(1);
+describe('A CLIENT', () => {
+  it ('Should not be able to have 0 bank accounts', () => {
+    expect(() => {
+      const numOfAccounts = new Client('Victor', 'Ribero');
+    }).to.throw('Client should have an account');
   });
 
-  if('Should be able to have more than 1 account in the bank', () => {
-    numOfAccounts.should.have.lengthOf(3);
+  it ('Should have a minimum of 1 bank account', () => {
+    const client = new Client('Victor', 'Ribero', [new BankAccount()]);
+    const accounts = client.currentAccounts();
+
+    accounts.should.have.lengthOf(1);
+  });
+
+  it ('Should be able to have more than 1 bank accounts', () => {
+    const accounts = new Client(
+      'Victor',
+      'Ribero',
+      [new BankAccount(), new BankAccount(100)],
+    ).currentAccounts();
+
+    accounts.should.have.lengthOf(2);
   });
 });

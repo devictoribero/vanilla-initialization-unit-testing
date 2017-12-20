@@ -42,7 +42,7 @@ describe('A BANK ACCOUNT', () => {
   });
 
   it ('Should substract correctly the amount of money from the account', () => {
-    const account = new BankAccount({name: 'victor', lastname: 'ribero'}, 100);
+    const account = new BankAccount(100);
 
     account.substractBalance(90);
 
@@ -50,7 +50,7 @@ describe('A BANK ACCOUNT', () => {
   });
 
   it ('Should throw an error if we try to substract more money than the existing', () => {
-    const account = new BankAccount({name: 'victor', lastname: 'ribero'}, 100);
+    const account = new BankAccount(100);
 
     expect(() => {
       account.substractBalance(999);
@@ -58,7 +58,7 @@ describe('A BANK ACCOUNT', () => {
   });
 
   it ('Should not be able to add money if the account is frozen', () => {
-    const account = new BankAccount({name: 'victor', lastname: 'ribero'}, 100, true);
+    const account = new BankAccount(100, true);
 
     expect(() => {
       account.addBalance(1);
@@ -66,7 +66,7 @@ describe('A BANK ACCOUNT', () => {
   });
 
   it ('Should not be able to substract money if the account is frozen', () => {
-    const account = new BankAccount({name: 'victor', lastname: 'ribero'}, 100, true);
+    const account = new BankAccount(100, true);
 
     expect(() => {
       account.substractBalance(10);
