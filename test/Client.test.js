@@ -70,5 +70,15 @@ describe('A CLIENT', () => {
 
       }).to.throw('The emissor account has not enough money');
     });
+
+    it ('Should have NOT the account frozen', () => {
+      const client = new Client('Victor', 'Ribero', [new BankAccount(10,true)]);
+      const ENOUGH_MONEY = 1;
+
+      expect(() => {
+        client.transferMoney(client.accounts[0], client.accounts[0], ENOUGH_MONEY);
+
+      }).to.throw('The emissor account is frozen');
+    });
   });
 });
