@@ -1,5 +1,5 @@
 export default class BankAccount {
-  constructor(owner, balance, isFrozen) {
+  constructor(balance, isFrozen) {
     this.id = this.generateRandomId();
     this.balance = balance || 0;
     this.isFrozen = isFrozen || false;
@@ -24,9 +24,13 @@ export default class BankAccount {
       throw new Error('Can not substract money to a frozen account');
     }
 
-    if (this.balance - balanceToSubstract < 0) {
-      throw new Error('Balance cant be negative');
+    if (!this.hasSameOrHigherMoney(balanceToSubstract)) {
+      throw new Error('Balance can not be negative');
     }
     this.balance -= balanceToSubstract;
+  }
+
+  hasSameOrHigherMoney(moneyToCheck) {
+    return this.balance >= moneyToCheck;
   }
 }
