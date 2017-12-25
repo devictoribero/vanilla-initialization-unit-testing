@@ -6,86 +6,165 @@ import Bank from '../modules/Bank';
 describe('A BANK', () => {
 
   describe('Should NOT be able to', () => {
-    it('Should NOT be able to create new offices without street', () => {
-      const bank = new Bank('BBVA');
-
-      expect(
-        bank.openOffice({
-          street: '',
+    describe('create new office without a', () => {
+      it('street', () => {
+        const bank = new Bank('BBVA');
+        const officeToOpen = {
+          street: null,
           number: '5045',
           city: 'Sao Paulo',
           country: 'Brasil',
           employees: 10,
-        })
+        };
 
-      ).to.throw('The bank can NOT open offices without a street');
+        expect(() => {
+          bank.openOffice(officeToOpen);
+
+        }).to.throw('The bank can NOT open offices without a street');
+      });
+
+      it('number', () => {
+        const bank = new Bank('BBVA');
+
+        expect(() => {
+          bank.openOffice({
+            street: 'Maldivas',
+            number: '',
+            city: 'Sao Paulo',
+            country: 'Brasil',
+            employees: 10,
+          });
+
+        }).to.throw('The bank can NOT open offices without a number');
+      });
+
+      it('city', () => {
+        const bank = new Bank('BBVA');
+
+        expect(() => {
+          bank.openOffice({
+            street: 'Maldivas',
+            number: '5045',
+            city: '',
+            country: 'Brasil',
+            employees: 10,
+          });
+
+        }).to.throw('The bank can NOT open offices without a city');
+      });
+
+      it('country', () => {
+        const bank = new Bank('BBVA');
+
+        expect(() => {
+          bank.openOffice({
+            street: 'Maldivas',
+            number: '5045',
+            city: 'Sao Paulo',
+            country: '',
+            employees: 10,
+          });
+
+        }).to.throw('The bank can NOT open offices without a country');
+      });
     });
 
-    it('Should NOT be able to create new offices without number', () => {
+    describe('move current offices to another city without a', () => {
+      it ('street', () => {
+        const bank = new Bank(
+          'BBVA',
+          [{
+            street: 'Santos',
+            number: '5045',
+            city: 'Sao Paulo',
+            country: 'Brasil',
+            employees: 10,
+          }]);
+
+        expect(() => {
+          bank.moveOfficeTo(bank.offices[0], {
+            street: '',
+            number: '5045',
+            city: 'Sao Paulo',
+            country: 'Brasil',
+          });
+
+        }).to.throw('The bank can NOT move the office to another city that has NOT a street');
+      });
+
+      it('number', () => {
+        const bank = new Bank(
+          'BBVA',
+          [{
+            street: 'Santos',
+            number: '5045',
+            city: 'Sao Paulo',
+            country: 'Brasil',
+            employees: 10,
+          }]);
+
+        expect(() => {
+          bank.moveOfficeTo(bank.offices[0], {
+            street: 'Maldivas',
+            number: '',
+            city: 'Sao Paulo',
+            country: 'Brasil',
+          });
+
+        }).to.throw('The bank can NOT move the office to another city that has NOT a number');
+      });
+
+      it('city', () => {
+        const bank = new Bank(
+          'BBVA',
+          [{
+            street: 'Santos',
+            number: '5045',
+            city: 'Sao Paulo',
+            country: 'Brasil',
+            employees: 10,
+          }]);
+
+        expect(() => {
+          bank.moveOfficeTo(bank.offices[0], {
+            street: 'Maldivas',
+            number: '5045',
+            city: '',
+            country: 'Brasil',
+          });
+
+        }).to.throw('The bank can NOT move the office to another city that has NOT a city');
+      });
+
+      it('country', () => {
+        const bank = new Bank(
+          'BBVA',
+          [{
+            street: 'Santos',
+            number: '5045',
+            city: 'Sao Paulo',
+            country: 'Brasil',
+            employees: 10,
+          }]);
+
+        expect(() => {
+          bank.moveOfficeTo(bank.offices[0], {
+            street: 'Maldivas',
+            number: '5045',
+            city: 'Sao Paulo',
+            country: '',
+          });
+
+        }).to.throw('The bank can NOT move the office to another city that has NOT a country');
+      });
+    });
+  });
+
+  describe('Should be able to', () => {
+    it('create new offices', () => {
       const bank = new Bank('BBVA');
 
-      expect(
-        bank.openOffice({
-          street: 'Maldivas',
-          number: '',
-          city: 'Sao Paulo',
-          country: 'Brasil',
-          employees: 10,
-        })
-
-      ).to.throw('The bank can NOT open offices without a number');
-    });
-
-    it('Should NOT be able to create new offices without city', () => {
-      const bank = new Bank('BBVA');
-
-      expect(
-        bank.openOffice({
-          street: 'Maldivas',
-          number: '5045',
-          city: '',
-          country: 'Brasil',
-          employees: 10,
-        })
-
-      ).to.throw('The bank can NOT open offices without a city');
-    });
-
-    it('Should NOT be able to create new offices without country', () => {
-      const bank = new Bank('BBVA');
-
-      expect(
-        bank.openOffice({
-          street: 'Maldivas',
-          number: '5045',
-          city: 'Sao Paulo',
-          country: '',
-          employees: 10,
-        })
-
-      ).to.throw('The bank can NOT open offices without a country');
-    });
-  });
-
-
-  it('Should be able to create new offices', () => {
-    const bank = new Bank('BBVA');
-
-    bank.openOffice({
-      street: 'Santos',
-      number: '5045',
-      city: 'Sao Paulo',
-      country: 'Brasil',
-      employees: 10,
-    });
-
-    (bank.offices).has.lengthOf(1);
-  });
-
-  it('Should NOT be able to move current offices to another city without a street', () => {
-    const bank = new Bank(
-      'BBVA',
-      {
+      bank.openOffice({
         street: 'Santos',
         number: '5045',
         city: 'Sao Paulo',
@@ -93,109 +172,40 @@ describe('A BANK', () => {
         employees: 10,
       });
 
-    expect(
-      (bank.office[0]).moveTo({
-        street: '',
-        number: '5045',
-        city: 'Sao Paulo',
-        country: 'Brasil',
-      })
+      (bank.offices).should.be.lengthOf(1);
+    });
 
-    ).to.throw('The bank can NOT move the office to another city that has NOT a street');
-  });
 
-  it('Should NOT be able to move current offices to another city without a number', () => {
-    const bank = new Bank(
-      'BBVA',
-      {
+    it('move current offices', () => {
+      const office1 = {
         street: 'Santos',
-        number: '5045',
+        number: 5045,
         city: 'Sao Paulo',
         country: 'Brasil',
         employees: 10,
-      });
-
-      expect(
-        (bank.office[0]).moveTo({
-          street: 'Maldivas',
-          number: '',
-          city: 'Sao Paulo',
-          country: 'Brasil',
-        })
-
-      ).to.throw('The bank can NOT move the office to another city that has NOT a number');
-  });
-
-  it('Should NOT be able to move current offices to another city without a city', () => {
-    const bank = new Bank(
-      'BBVA',
-      {
-        street: 'Santos',
-        number: '5045',
+      };
+      const office2 = {
+        street: 'Papaya',
+        number: 1,
         city: 'Sao Paulo',
         country: 'Brasil',
         employees: 10,
-      });
+      };
+      const bank = new Bank('BBVA', [office2]);
+      bank.moveOfficeTo(bank.offices[0], office2);
 
-      expect(
-        (bank.office[0]).moveTo({
-          street: 'Maldivas',
-          number: '5045',
-          city: '',
-          country: 'Brasil',
-        })
+      (bank.offices[0].number).should.not.be.equal(office1.number);
+    });
 
-      ).to.throw('The bank can NOT move the office to another city that has NOT a city');
-  });
+    it('create accounts', () => {
 
-  it('Should NOT be able to move current offices to another city without a country', () => {
-    const bank = new Bank(
-      'BBVA',
-      {
-        street: 'Santos',
-        number: '5045',
-        city: 'Sao Paulo',
-        country: 'Brasil',
-        employees: 10,
-      });
+    });
 
-      expect(
-        (bank.office[0]).moveTo({
-          street: 'Maldivas',
-          number: '5045',
-          city: 'Sao Paulo',
-          country: '',
-        })
+    it('freeze accounts', () => {
 
-      ).to.throw('The bank can NOT move the office to another city that has NOT a country');
-  });
-
-  it('Should be able to move current offices', () => {
-    const bank = new Bank(
-      'BBVA',
-      {
-        street: 'Santos',
-        number: '5045',
-        city: 'Sao Paulo',
-        country: 'Brasil',
-        employees: 10,
-      });
-
-    (bank.office[0]).moveTo({
-      street: 'Santos',
-      number: '5045',
-      city: 'Sao Paulo',
-      country: 'Brasil',
     });
   });
 
-  it('Should be able to create accounts', () => {
-
-  });
-
-  it('Should be able to freeze accounts', () => {
-
-  });
 
 
   describe('When is tranfering money from one account to another one', () => {
