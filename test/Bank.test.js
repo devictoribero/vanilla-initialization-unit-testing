@@ -210,19 +210,39 @@ describe('A BANK', () => {
       numberOfClients.should.not.be.equal(bank.clients.length);
     });
 
-    it('freeze accounts', () => {
+    it ('freeze accounts', () => {
+      const onlyAccount = new BankAccount(10000);
+      const isNotFrozen = onlyAccount.isFrozen;
+      const client = new Client('Victor', 'Ribero', [onlyAccount]);
+      const bbva = new Bank('BBVA');
+      bbva.registerNewClient(client);
 
+      bbva.freezeAccount(onlyAccount);
+
+      (onlyAccount.isFrozen).should.not.be.equal(isNotFrozen);
+    });
+
+    it ('unfreeze accounts', () => {
+      const onlyAccount = new BankAccount(10000, true);
+      const isFrozen = onlyAccount.isFrozen;
+      const client = new Client('Victor', 'Ribero', [onlyAccount]);
+      const bbva = new Bank('BBVA');
+      bbva.registerNewClient(client);
+
+      bbva.unfreezeAccount(onlyAccount);
+
+      (onlyAccount.isFrozen).should.not.be.equal(isFrozen);
     });
   });
 
 
 
-  describe('When is tranfering money from one account to another one', () => {
-    it('Should not be able to transfer money if the any account is frozen', () => {
+  describe ('When is tranfering money from one account to another one', () => {
+    it ('Should not be able to transfer money if the any account is frozen', () => {
 
     });
 
-    it('Should be able to freeze accounts if someone has not enough money', () => {
+    it ('Should be able to freeze accounts if someone has not enough money', () => {
 
     });
   });

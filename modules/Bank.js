@@ -58,4 +58,26 @@ export default class Bank {
 
     this.clients.push(newClient);
   }
+
+  freezeAccount(accountToFreeze) {
+    this.clients.map(client => {
+      client.accounts.map(acc => {
+        if (isEquivalent(accountToFreeze, acc)) {
+          acc.isFrozen = true;
+          return;
+        }
+      });
+    });
+  }
+
+  unfreezeAccount(accountToFreeze) {
+    this.clients.map(client => {
+      client.accounts.map(acc => {
+        if (isEquivalent(accountToFreeze, acc)) {
+          acc.isFrozen = false;
+          return;
+        }
+      });
+    });
+  }
 }
