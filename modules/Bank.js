@@ -59,6 +59,11 @@ export default class Bank {
     this.clients.push(newClient);
   }
 
+  registerClients(clientsToRegister) {
+    if (clientsToRegister.length == 0) return new Error('No clients given');
+    clientsToRegister.map(cli => this.clients.push(cli));
+  }
+
   freezeAccount(accountToFreeze) {
     this.clients.map(client => {
       client.accounts.map(acc => {
@@ -79,5 +84,12 @@ export default class Bank {
         }
       });
     });
+  }
+
+  transferMoney(emissorAccount, receptorAccount, money) {
+    if (money <= 0) return new Error('The bank can NOT do negative or null transactions');
+
+    emissorAccount.substractBalance(money);
+    receptorAccount.addBalance(money);
   }
 }
