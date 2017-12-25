@@ -238,7 +238,6 @@ describe('A BANK', () => {
 
 
   describe ('When is tranfering money from one account to another one', () => {
-
     it ('Should be able to do it successfully', () => {
       const INITIAL_MONEY = 1000;
       const accountClient1 = new BankAccount(INITIAL_MONEY);
@@ -250,14 +249,22 @@ describe('A BANK', () => {
 
       bbva.transferMoney(accountClient1, accountClient2, 200);
 
-      (accountClient1.balance).should.be.not.equal(INITIAL_MONEY);
+      (accountClient1.balance).should.be.not.equal(1000);
     });
 
-    it ('Should not be able to transfer money if the any account is frozen', () => {
+    it ('Should not be able to transfer money if any account is frozen', () => {
+      const INITIAL_MONEY = 1000;
+      const accountClient1 = new BankAccount(INITIAL_MONEY, true);
+      const client1 = new Client('Victor', 'Ribero', [accountClient1]);
+      const accountClient2 = new BankAccount();
+      const client2 = new Client('Daniel', 'Ribero', [accountClient2]);
+      const bbva = new Bank('BBVA');
+      bbva.registerClients([accountClient1, accountClient2]);
 
-    });
+      expect(() => { // Analize why it does NOT work
+        bbva.transferMoney(accountClient1, accountClient2, 200);
 
-    it ('Should be able to freeze accounts if someone has not enough money', () => {
+      }).to.throw('The bank can NOT transfer money because the account is frozen');
 
     });
   });

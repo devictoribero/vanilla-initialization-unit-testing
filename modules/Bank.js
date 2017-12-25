@@ -87,7 +87,17 @@ export default class Bank {
   }
 
   transferMoney(emissorAccount, receptorAccount, money) {
-    if (money <= 0) return new Error('The bank can NOT do negative or null transactions');
+    console.log(emissorAccount.isFrozen);
+    console.log(receptorAccount.isFrozen);
+    if (money <= 0) {
+      return new Error('The bank can NOT do negative or null transactions');
+    }
+    if (emissorAccount.isFrozen || receptorAccount.isFrozen) {
+      return new Error('The bank can NOT transfer money because the account is frozen');
+    }
+    if (!emissorAccount.hasSameOrHigherMoney(money)) {
+      return new Error('The emissor account has not enough money');
+    }
 
     emissorAccount.substractBalance(money);
     receptorAccount.addBalance(money);
