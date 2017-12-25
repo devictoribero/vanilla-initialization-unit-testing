@@ -1,9 +1,10 @@
 import isEquivalent from '../helpers/isEquivalent';
 
 export default class Bank {
-  constructor(name, offices) {
+  constructor(name, offices, clients) {
     this.name = name;
     this.offices = offices || [];
+    this.clients = clients || [];
   }
 
   openOffice(office) {
@@ -48,5 +49,13 @@ export default class Bank {
       }
       i++;
     }
+  }
+
+  registerNewClient(newClient) {
+    if (newClient === undefined || newClient === null) {
+      return new Error('Undefined or null given to create a new client');
+    }
+
+    this.clients.push(newClient);
   }
 }

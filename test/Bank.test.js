@@ -2,6 +2,8 @@ import * as chai from 'chai';
 import {expect} from 'chai';
 const should = chai.should();
 import Bank from '../modules/Bank';
+import BankAccount from '../modules/BankAccount';
+import Client from '../modules/Client';
 
 describe('A BANK', () => {
 
@@ -197,8 +199,15 @@ describe('A BANK', () => {
       (bank.offices[0].number).should.not.be.equal(office1.number);
     });
 
-    it('create accounts', () => {
+    it('register new clients', () => {
+      const onlyAccount = new BankAccount(10000);
+      const client = new Client('Victor', 'Ribero', [onlyAccount]);
+      const bank = new Bank('BBVA');
+      const numberOfClients = bank.clients.length;
 
+      bank.registerNewClient(client);
+
+      numberOfClients.should.not.be.equal(bank.clients.length);
     });
 
     it('freeze accounts', () => {
